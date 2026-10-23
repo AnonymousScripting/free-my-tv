@@ -28,3 +28,12 @@ test('change: flat and unknown render as neutral', () => {
   assert.deepEqual(Format.change(0), {text: '0.0%', dir: 'flat'});
   assert.deepEqual(Format.change(NaN), {text: '', dir: 'flat'});
 });
+
+test('initialTheme: a remembered night paints dark before the first frame', () => {
+  assert.equal(Format.initialTheme('night'), 'night');
+});
+test('initialTheme: anything else paints the default (day) and never throws', () => {
+  assert.equal(Format.initialTheme('day'), '');
+  assert.equal(Format.initialTheme(null), '');
+  assert.equal(Format.initialTheme(undefined), '');
+});

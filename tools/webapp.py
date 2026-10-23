@@ -55,6 +55,9 @@ def read_config(path):
         'temperature': values.get('temperature', 'auto') or 'auto',
         'showCrypto': values.get('show_crypto', 'true').lower() != 'false',
         'hideAnimation': values.get('hide_animation', 'false').lower() == 'true',
+        # Shelf keys (netflix, youtube, prime, disney, max, appletv, hulu, paramount, peacock, nfl, globoplay, spotify),
+        # in order, for the shelf's first fill; empty keeps the built-in order. Changes on the TV still win.
+        'shelf': [k.strip().lower() for k in values.get('shelf', '').split(',') if k.strip()],
     }
 
 

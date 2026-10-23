@@ -90,11 +90,14 @@ var TV = (function () {
   // Netflix, which live there too), services, keyboards and ad players. The rest is what Smart Hub shows.
   // Tizen 4 also lists Samsung's own pieces: the YouTube engine's hosts (cobalt-*: "App", "Youtube", "YoutubeTV"),
   // Bixby, search, previews, the weather and notification popups, Apple TV's stand-in and engine.
-  var SAMSUNG_HIDDEN = new RegExp('^(org\\.volt\\.|org\\.tizen\\.(?!browser$|netflix)|org\\.tizen\\.netflixlowmem$|ise-|ug-|d75857a5-)' +
+  var SAMSUNG_HIDDEN = new RegExp('^(org\\.volt\\.|org\\.tizen\\.(?!browser$|netflix|primevideo$)|org\\.tizen\\.netflixlowmem$|ise-|ug-|d75857a5-)' +
       '|[Ss]ervice$|[Dd]aemon|Preview$|syspopup|[Hh]elper$|AdPlayer|AdSuite|[Kk]eyboard|\\.OTApp$' +
       '|^com\\.samsung\\.(calendar-account-manager|tv\\.(cobalt-|aria-(dummy|engine)|airplay-app|ambient-support|' +
       'built-in-app-info-viewer|commonsearch|searchall|preview-|tv-scheduler|csfs|notification-app|mycontents|' +
-      'safLaunchBridge|shortcut|remote-workspace|voiceassistant|mybixby|weather-viewer))');
+      'safLaunchBridge|shortcut|remote-workspace|voiceassistant|mybixby|weather-viewer|aitech-app|ambientfte|aov-dashboard|appinfoviewer|' +
+      'arkwheel|bbplayer|bixby|camera-launcher|coba\\.|social-chat-app|store$|knox-|mde-|remoteapp\\.))' +
+      // Samsung's own promo, legal and setup pieces that Tizen lists as apps (2022 QN95B), and the dummy Prime entry.
+      '|^(2022ePop01|WcsAp4xyb3|tv6pbVMQFF|J9fZJDMi1v|d0m1lV1nt2|yL49PNFmjW|LImG0QPABV\\.service|adplatform)\\.?|^org\\.tizen\\.primevideo-dummy$');
 
   // Samsung apps whose iconPath is Tizen's generic pinwheel (a valid image, so onerror never fires): our own icons.
   // Seen on a 2018 NU7675 (Tizen 4); Smart Hub draws their real icons from a folder apps can't read. On a 2017
@@ -102,6 +105,8 @@ var TV = (function () {
   // for the tiles, with a width and height so old WebKit sizes them like PNGs.
   var SAMSUNG_ICONS = {
     '9Ur5IzDKqV.TizenYouTube': 'icons/youtube.png',
+    'org.tizen.primevideo': 'icons/prime.png',
+    'LBUAQX1exg.Hulu': 'icons/hulu.svg',
     'evKhCgZelL.AmazonIgnitionLauncher2': 'icons/prime.png',
     'RN1MCdNq8t.Netflix': 'icons/netflix.svg',
     'org.tizen.netflix-app': 'icons/netflix.svg',

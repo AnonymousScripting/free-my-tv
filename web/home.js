@@ -120,9 +120,12 @@
         for (var j = 0; j < apps.length; j++) if (apps[j].id === chosen[i]) out.push(apps[j]);
       }
     } else {
-      for (var s = 0; s < SHELF.length && out.length < MAX_SHELF; s++) {
+      // config.properties' shelf= picks and orders the first fill; without it, every known service in SHELF's order.
+      var want = (CONFIG.shelf && CONFIG.shelf.length) ? CONFIG.shelf : null;
+      var order = want ? want.map(function (k) { for (var j = 0; j < SHELF.length; j++) if (SHELF[j][0] === k) return SHELF[j]; return null; }).filter(Boolean) : SHELF;
+      for (var s = 0; s < order.length && out.length < MAX_SHELF; s++) {
         for (var a = 0; a < apps.length; a++) {
-          if ((SHELF[s][1].test(apps[a].id) || SHELF[s][2].test(apps[a].title)) && out.indexOf(apps[a]) < 0) { out.push(apps[a]); break; }
+          if ((order[s][1].test(apps[a].id) || order[s][2].test(apps[a].title)) && out.indexOf(apps[a]) < 0) { out.push(apps[a]); break; }
         }
       }
       if (!out.length) out = apps.slice(0, MAX_SHELF);
@@ -748,7 +751,9 @@
   // MARK: - Night, clock, screensaver
 
   function checkNight() {
-    setClass(body, 'night', Data.isNight(Date.now()));
+    var night = Data.isNight(Date.now());
+    setClass(body, 'night', night);
+    try { localStorage.setItem('fmtv.lastTheme', night ? 'night' : 'day'); } catch (e) {}
   }
 
   var saverOn = false, idleAt = Date.now(), saverIndex = 0, saverTimer = 0, SAVER_AFTER = 5 * 60000;

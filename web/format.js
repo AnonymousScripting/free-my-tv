@@ -12,6 +12,8 @@
   }
 
   var Format = {
+    /** The class to paint with before any data arrives: 'night' when the last run ended at night, else ''. */
+    initialTheme: function (stored) { return stored === 'night' ? 'night' : ''; },
     /** "$81,512.34": always two decimals, digits grouped in threes. NaN → "$—". */
     price: function (v, symbol) {
       symbol = symbol || '';
