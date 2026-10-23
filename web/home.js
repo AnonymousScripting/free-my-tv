@@ -148,7 +148,6 @@
     }
     list = $('buttons').children;
     for (i = 0; i < list.length; i++) setClass(list[i], 'focus', st.zone === Z.TOP && st.top === 3 + i);
-    setClass($('quotes'), 'hide', st.zone === Z.TOP && st.top >= 3);
     list = $('cards').children;
     for (i = 0; i < list.length; i++) setClass(list[i], 'focus', st.zone === Z.CARDS && st.card === i);
     list = $('tiles').children;
@@ -214,13 +213,16 @@
     }
   }
 
+  /** The ticker in the title row: each coin's logo in its brand colour, the full price and the 24-hour change. */
   function renderQuotes() {
     var q = $('quotes'), coins = Data.activeCoins();
     q.innerHTML = '';
     for (var i = 0; i < coins.length; i++) {
-      var item = el('span', 'q', q);
-      coin(coins[i], item);
-      el('span', '', item, Data.compact(Data.prices[coins[i]]));
+      var k = coins[i], item = el('span', 'q coin' + k, q);
+      coin(k, item);
+      el('span', 'p', item, Format.price(Data.prices[k], Data.currencySymbol));
+      var ch = Format.change(Data.changes[k]);
+      if (ch.text) el('span', 'd ' + ch.dir, item, ch.text);
     }
   }
 
@@ -299,7 +301,6 @@
     platter.style.width = (width + 2 * pad) + 'px';
     platter.style.top = (814 + 126 - th) + 'px';
     platter.style.height = (th + 2 * pad) + 'px';
-    $('quotes').style.right = (1920 - left - width) + 'px';
     var tiles = $('tiles');
     tiles.innerHTML = '';
     for (var i = 0; i < n; i++) {

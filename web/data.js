@@ -502,6 +502,7 @@ var Data = (function () {
     COINS: COINS,
     city: Place.city,
     currency: CURRENCY,
+    get currencySymbol() { return SYMBOLS[CURRENCY] || CURRENCY + ' '; },
     onChange: function (fn) { listeners.push(fn); },
     setApps: function (apps) { installed = apps; },
     appFor: appFor,

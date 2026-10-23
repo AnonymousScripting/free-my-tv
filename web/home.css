@@ -130,25 +130,37 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .night .tab { color: rgba(245, 245, 247, 0.62); }
 .night .tab.focus { color: #1D1D1F; box-shadow: 0 8px 26px rgba(0, 0, 0, 0.4); }
 
-/* Crypto quotes at the right end of the tab row: a quiet detail. */
+/* Crypto ticker, centred in the title row: brand-coloured logo, full price, 24-hour change (green up, red down). */
 #quotes {
   position: absolute;
-  right: 80px;
-  top: 178px;
-  height: 28px;
-  font-size: 21px;
-  line-height: 28px;
-  color: #8E8E93;
+  left: 50%;
+  top: 66px;
+  height: 48px;
+  font-size: 34px;
+  line-height: 48px;
+  color: #1D1D1F;
   white-space: nowrap;
-  -webkit-transition: opacity 0.25s;
-  transition: opacity 0.25s;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  -webkit-transition: opacity 0.25s, color 2s;
+  transition: opacity 0.25s, color 2s;
   font-feature-settings: 'tnum';
 }
-#quotes .q { display: inline-block; margin-left: 24px; }
-#quotes svg { width: 15px; height: 15px; vertical-align: -1px; margin-right: 6px; fill: rgba(142, 142, 147, 0.7); }
+#quotes .q { display: inline-block; margin: 0 26px; }
+#quotes svg { width: 44px; height: 44px; vertical-align: -11px; margin-right: 12px; }
+#quotes .coin0 svg { fill: #F7931A; }   /* Bitcoin */
+#quotes .coin1 svg { fill: #627EEA; }   /* Ethereum */
+#quotes .coin2 svg { fill: #9945FF; }   /* Solana */
+#quotes .coin3 svg { fill: #26A17B; }   /* Tether */
+#quotes .p { font-weight: 600; }
+#quotes .d { margin-left: 12px; font-size: 24px; font-weight: 600; }
+#quotes .d.up { color: #1F9D55; }
+#quotes .d.down { color: #E5484D; }
+#quotes .d.flat { color: #8E8E93; }
 #quotes.hide { opacity: 0; }
-.night #quotes { color: rgba(245, 245, 247, 0.62); }
-.night #quotes svg { fill: rgba(245, 245, 247, 0.55); }
+.night #quotes { color: #F5F5F7; }
+.night #quotes .d.up { color: #30D158; }
+.night #quotes .d.down { color: #FF453A; }
 
 /* Live TV, HDMI Inputs and Settings: glass circles; the focused one turns white, with its name below. */
 .round {
