@@ -37,3 +37,24 @@ test('initialTheme: anything else paints the default (day) and never throws', ()
   assert.equal(Format.initialTheme(null), '');
   assert.equal(Format.initialTheme(undefined), '');
 });
+
+test('inputKey: "hdmi2" in shelf= means the TV source HDMI 2', () => {
+  assert.deepEqual(Format.inputKey('hdmi2'), {id: 'source:HDMI:2', number: 2, label: 'HDMI 2'});
+});
+test('inputKey: "hdmi2:NVIDIA Shield" names the tile', () => {
+  assert.deepEqual(Format.inputKey('hdmi2:NVIDIA Shield'), {id: 'source:HDMI:2', number: 2, label: 'NVIDIA Shield'});
+});
+test('inputKey: app keys and junk are not inputs', () => {
+  assert.equal(Format.inputKey('netflix'), null);
+  assert.equal(Format.inputKey('hdmi'), null);
+  assert.equal(Format.inputKey('hdmi9'), null);
+});
+
+test('shelfChanged: a new shelf= in the config replaces the choice saved on the TV, once', () => {
+  assert.equal(Format.shelfChanged(['hdmi2:NVIDIA Shield', 'netflix'], 'netflix,youtube'), true);
+  assert.equal(Format.shelfChanged(['netflix', 'youtube'], 'netflix,youtube'), false);
+});
+test('shelfChanged: no shelf= in the config never resets anything', () => {
+  assert.equal(Format.shelfChanged([], null), false);
+  assert.equal(Format.shelfChanged(undefined, 'netflix'), false);
+});

@@ -12,6 +12,18 @@
   }
 
   var Format = {
+    /** True when config.properties' shelf= differs from the one the TV last applied (stored as a joined string). */
+    shelfChanged: function (configShelf, storedSig) {
+      if (!configShelf || !configShelf.length) return false;
+      return configShelf.join(',') !== (storedSig || '');
+    },
+    /** A shelf= key naming an HDMI port, "hdmi2" or "hdmi2:NVIDIA Shield" → {id, number, label}; anything else → null. */
+    inputKey: function (key) {
+      var m = /^hdmi([1-4])(?::(.+))?$/i.exec(String(key || '').trim());
+      if (!m) return null;
+      var n = +m[1];
+      return {id: 'source:HDMI:' + n, number: n, label: (m[2] || '').trim() || 'HDMI ' + n};
+    },
     /** The class to paint with before any data arrives: 'night' when the last run ended at night, else ''. */
     initialTheme: function (stored) { return stored === 'night' ? 'night' : ''; },
     /** "$81,512.34": always two decimals, digits grouped in threes. NaN → "$—". */

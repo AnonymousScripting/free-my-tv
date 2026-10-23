@@ -122,8 +122,14 @@
     } else {
       // config.properties' shelf= picks and orders the first fill; without it, every known service in SHELF's order.
       var want = (CONFIG.shelf && CONFIG.shelf.length) ? CONFIG.shelf : null;
-      var order = want ? want.map(function (k) { for (var j = 0; j < SHELF.length; j++) if (SHELF[j][0] === k) return SHELF[j]; return null; }).filter(Boolean) : SHELF;
+      var order = want ? want.map(function (k) {
+        var input = Format.inputKey(k);
+        if (input) return input;                              // an HDMI port as a tile (hdmi2, hdmi2:NVIDIA Shield)
+        for (var j = 0; j < SHELF.length; j++) if (SHELF[j][0] === k) return SHELF[j];
+        return null;
+      }).filter(Boolean) : SHELF;
       for (var s = 0; s < order.length && out.length < MAX_SHELF; s++) {
+        if (order[s].id) { var tile = inputTile(order[s]); if (tile && out.indexOf(tile) < 0) out.push(tile); continue; }
         for (var a = 0; a < apps.length; a++) {
           if ((order[s][1].test(apps[a].id) || order[s][2].test(apps[a].title)) && out.indexOf(apps[a]) < 0) { out.push(apps[a]); break; }
         }
@@ -220,6 +226,12 @@
   function renderQuotes() {
     var q = $('quotes'), coins = Data.activeCoins();
     q.innerHTML = '';
+    var w = Prefs.weather() && Data.weather;
+    if (w) {                                                  // the weather now, in front of the prices
+      var wx = el('span', 'q wx', q);
+      sym(Data.symbol(w.code, w.isDay), wx);
+      el('span', 'p', wx, Data.degrees(w.temp));
+    }
     for (var i = 0; i < coins.length; i++) {
       var k = coins[i], item = el('span', 'q coin' + k, q);
       coin(k, item);
@@ -845,9 +857,25 @@
     updateFocus();
   }
 
+  /** The tile for an HDMI port named in shelf=, added to `apps` once so the saved shelf and the Shelf list know it. */
+  function inputTile(input) {
+    for (var i = 0; i < apps.length; i++) if (apps[i].id === input.id) return apps[i];
+    var tile = {id: input.id, title: input.label, icon: /shield/i.test(input.label) ? 'icons/shield.svg' : '', color: '#1C1C1E', input: true};
+    apps.push(tile);
+    return tile;
+  }
+
   function loadApps(done) {
     TV.apps(function (list) {
       apps = list;
+      for (var i = 0; CONFIG.shelf && i < CONFIG.shelf.length; i++) { var k = Format.inputKey(CONFIG.shelf[i]); if (k) inputTile(k); }
+      // A new shelf= in the config wins once over the shelf picked on the TV; after that the TV's choice rules again.
+      try {
+        if (Format.shelfChanged(CONFIG.shelf, localStorage.getItem('fmtv.shelfSig'))) {
+          Prefs.set('shelf', null);
+          localStorage.setItem('fmtv.shelfSig', CONFIG.shelf.join(','));
+        }
+      } catch (e) {}
       Data.setApps(apps);
       pickShelf();
       TV.inputs(function (list2) {

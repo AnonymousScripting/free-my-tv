@@ -133,27 +133,29 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 /* Crypto ticker, centred in the title row: brand-coloured logo, full price, 24-hour change (green up, red down). */
 #quotes {
   position: absolute;
-  left: 50%;
+  left: 380px;                 /* the gap between the title and the three buttons */
+  right: 352px;
   top: 66px;
   height: 48px;
-  font-size: 34px;
+  font-size: 31px;
   line-height: 48px;
   color: #1D1D1F;
   white-space: nowrap;
-  -webkit-transform: translateX(-50%);
-  transform: translateX(-50%);
+  text-align: center;
   -webkit-transition: opacity 0.25s, color 2s;
   transition: opacity 0.25s, color 2s;
   font-feature-settings: 'tnum';
 }
-#quotes .q { display: inline-block; margin: 0 26px; }
-#quotes svg { width: 44px; height: 44px; vertical-align: -11px; margin-right: 12px; }
+#quotes .q { display: inline-block; margin: 0 17px; }
+#quotes svg { width: 40px; height: 40px; vertical-align: -10px; margin-right: 10px; }
 #quotes .coin0 svg { fill: #F7931A; }   /* Bitcoin */
 #quotes .coin1 svg { fill: #627EEA; }   /* Ethereum */
 #quotes .coin2 svg { fill: #9945FF; }   /* Solana */
 #quotes .coin3 svg { fill: #26A17B; }   /* Tether */
 #quotes .p { font-weight: 600; }
-#quotes .d { margin-left: 12px; font-size: 24px; font-weight: 600; }
+#quotes .wx .sym { width: 40px; height: 40px; vertical-align: -10px; margin-right: 8px; background: #1D1D1F; }
+.night #quotes .wx .sym { background: #F5F5F7; }
+#quotes .d { margin-left: 10px; font-size: 22px; font-weight: 600; }
 #quotes .d.up { color: #1F9D55; }
 #quotes .d.down { color: #E5484D; }
 #quotes .d.flat { color: #8E8E93; }
