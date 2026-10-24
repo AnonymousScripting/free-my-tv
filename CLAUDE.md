@@ -142,10 +142,9 @@ screen stays. Two ways:
 5. **Settings:** the same `config.properties`; the TMDB key rules above apply.
 6. **Build and sign:** `python3 tizen/build.py --sign <profile>` must end with `Built FreeMyTV-tizen.wgt (...,
    signed with "<profile>")`.
-7. **Install:** `python3 tizen/install.py <IP>`. It reports success only when the TV says `install completed`
-   (`cmd_ret:0` comes after failures too). `--uninstall` removes it; where the TV's sdbd doesn't answer, it's removed on
-   the TV (Apps, Settings, Free My TV, Delete). Updates need the same certificate: the TV refuses one signed by
-   another (uninstall first). Details and Samsung's own `sdb`/`tizen` commands: `.claude/rules/samsung-tizen.md`.
+7. **Install:** `python3 tizen/install.py <IP>`; it succeeded only when the TV said `install completed`. Updates need
+   the same certificate (uninstall first otherwise). `--uninstall`, Samsung's own `sdb`/`tizen` commands and the sdbd
+   traps: `.claude/rules/samsung-tizen.md`.
 8. **Tell them:** *Autorun Last App* in the TV's settings (under Start Screen Options; where it is changes by year)
    makes the TV turn on into Free My TV.
 
@@ -165,10 +164,12 @@ and add the release's section to `CHANGELOG.md`.
 
 - Run `tools/check.sh` before you push. `.github/workflows/check.yml` runs it on every pull request and push to
   `main` (JDK 17, build-tools 34, android-34: the README's versions, not the newest).
-- Upstream is github.com/simbasjungles/free-my-tv. Changes meant for everyone go there as a pull request; the
-  maintainer reviews and merges them (merge commits, no squash). Nothing merges by itself, and `Check` must be green.
-- The AnonymousScripting fork mirrors upstream `main` (fast-forward only; no commits of its own on `main`). Work on a
-  branch, open the PR on the fork, and a human merges it after review.
+- Upstream is github.com/simbasjungles/free-my-tv (`origin`, read-only for us): changes meant for everyone go there
+  as a pull request, and its maintainer merges them (merge commits) once `Check` is green.
+- The AnonymousScripting fork (`fork`) is ours: branch, open the PR there, and merge by risk as in every
+  AnonymousScripting repo. Docs, chores and small fixes squash-merge once `Check` is green (or has no run: the fork's
+  Actions were never enabled); data deletion, secrets, money and merge-system changes wait for the fork's owner. Bring
+  upstream in with `git merge origin/main`; `gh repo sync` only fast-forwards and fails once the fork has its own commits.
 - The website deploys itself: a push to `main` that changes `docs/**` runs `pages.yml` and publishes to GitHub Pages.
   `docs/index.html` (English) and `docs/pt/index.html` (Brazilian Portuguese) are the same page in two languages, so
   change both; visitors from Brazil land on the Portuguese one by themselves, and the PT/EN switch is remembered.

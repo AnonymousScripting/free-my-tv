@@ -39,8 +39,9 @@ back to *Original*, with `adb logcat -s FreeMyTV` read in between.
 ## Pull requests and merging
 
 Branch, run `tools/check.sh`, open a PR. Upstream (`simbasjungles/free-my-tv`) is merged by its maintainer with merge
-commits; in the AnonymousScripting fork a human reviews and merges, and `main` only mirrors upstream. Nothing
-auto-merges. A push to `main` that changes `docs/**` publishes the website.
+commits. In the AnonymousScripting fork, PRs merge by risk: docs, chores and small fixes squash-merge once `Check`
+passes; data deletion, secrets, money or merge-system changes wait for a human. A push to `main` touching `docs/**`
+publishes the website.
 
 ## Rules that must not be skipped
 

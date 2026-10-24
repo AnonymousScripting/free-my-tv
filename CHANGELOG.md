@@ -16,7 +16,7 @@ All notable changes to Free My TV, for the people who use it. The format follows
   Wink and IVI buttons can open the app you pick.
 - HY300 projectors: Keystone and Screen Mirroring shortcuts in the drawer, and HDMI that opens.
 - LG and Samsung: `hide_apps` leaves apps out of the shelf, All Apps and the picks; Jellyfin on the shelf.
-- Translations: one catalogue per language in `app/assets/i18n/` (24 languages, #52), used by the LG and Samsung app
+- Translations: one catalogue per language in `app/assets/i18n/` (25 languages, #52), used by the LG and Samsung app
   too; Thai hand-translated, Turkish `tr.json` as a reference catalogue; a language list in Home Settings.
 - CI: `tools/check.sh` builds everything and checks the catalogues on every pull request (`check.yml`).
 
