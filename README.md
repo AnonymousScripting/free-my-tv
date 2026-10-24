@@ -226,6 +226,8 @@ It's your code, and Claude Code finds its way around it. Try:
 
 The website ([freemytv.io](https://freemytv.io)) is in [`docs/`](docs): plain HTML, CSS and JS on GitHub Pages.
 
+**Changing the code, or helping with an AI assistant?** [`CLAUDE.md`](CLAUDE.md) is the guide (install flows, release steps, the safety rules); [`AGENTS.md`](AGENTS.md) is the short version for other assistants; [`CONTEXT.md`](CONTEXT.md) explains the vocabulary and how the pieces fit; [`docs/adr/`](docs/adr) records the decisions and [`CHANGELOG.md`](CHANGELOG.md) what changed. Run `tools/check.sh` before you push: it is what every pull request runs.
+
 ## Translations
 
 On Google TV, LG and Samsung, each language is one file, [`app/assets/i18n/<lang>.json`](app/assets/i18n), keyed by the

@@ -13,3 +13,6 @@ __pycache__/
 # macOS
 .DS_Store
 tools/.i18n-cache.json
+
+# Claude Code worktrees for reviews (git worktree add ... .claude/worktrees/<name>)
+.claude/worktrees/
