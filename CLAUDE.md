@@ -166,10 +166,10 @@ and add the release's section to `CHANGELOG.md`.
   `main` (JDK 17, build-tools 34, android-34: the README's versions, not the newest).
 - Upstream is github.com/simbasjungles/free-my-tv (`origin`, read-only for us): changes meant for everyone go there
   as a pull request, and its maintainer merges them (merge commits) once `Check` is green.
-- The AnonymousScripting fork (`fork`) is ours: branch, open the PR there, and merge by risk as in every
-  AnonymousScripting repo. Docs, chores and small fixes squash-merge once `Check` is green (or has no run: the fork's
-  Actions were never enabled); data deletion, secrets, money and merge-system changes wait for the fork's owner. Bring
-  upstream in with `git merge origin/main`; `gh repo sync` only fast-forwards and fails once the fork has its own commits.
+- The AnonymousScripting fork (`fork`) is ours: branch, open the PR there, merge by risk. Docs, chores and small fixes
+  squash-merge once `Check` is green (or has no run: the fork's Actions were never enabled); data deletion, secrets,
+  money and merge-system changes wait for the fork's owner. Bring upstream in with `git merge origin/main`
+  (`gh repo sync` only fast-forwards and fails once the fork has its own commits).
 - The website deploys itself: a push to `main` that changes `docs/**` runs `pages.yml` and publishes to GitHub Pages.
   `docs/index.html` (English) and `docs/pt/index.html` (Brazilian Portuguese) are the same page in two languages, so
   change both; visitors from Brazil land on the Portuguese one by themselves, and the PT/EN switch is remembered.
